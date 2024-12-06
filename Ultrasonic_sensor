@@ -1,0 +1,49 @@
+//Digital pins
+int LEDpin=10; 
+int echo_pins=9; //Input pin
+int trig_pins=8;//Output pin
+
+//Variables 
+int distance;
+int duration;// Since distance=speed*time
+int delay_time=500;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);//Open the serial port at 9600
+  pinMode(LEDpin,OUTPUT);
+  pinMode(trig_pins,OUTPUT);
+  pinMode(echo_pins,INPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  //Give low pulse before giving high pulse
+  digitalWrite(trig_pins,LOW);
+  delayMicroseconds(1);
+  digitalWrite(trig_pins,HIGH);
+  delayMicroseconds(1);
+  digitalWrite(trig_pins,LOW);//Reset to emitting 
+
+  //Measure the length of the return pulse
+  duration=pulseIn(echo_pins,HIGH);
+
+   //Finding how far away an object is placed next to the Ultrasonic sensor
+   //Divide by 2 to not count the returning journey of the pulse.
+  distance= (duration/29)/2; //Since the speed of sound is 343 m/s hence 29 microseconds per cm
+  LED_function(distance);
+  Serial.print("Distance: ");
+  Serial.println(distance);
+}
+
+//Turns on the LED when the Ultrasonic sensor
+//detects an object less than specified distance.
+void LED_function(int dist){
+   if(distance<30){
+    digitalWrite(LEDpin,HIGH);
+  }else{
+    digitalWrite(LEDpin,LOW);
+  }
+}
+
+
