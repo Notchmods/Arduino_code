@@ -6,7 +6,7 @@ int trig_pins=8;//Output pin
 //Variables 
 int distance;
 int duration;// Since distance=speed*time
-int delay_time=500;
+int delay_time=500, Ultrasonic_delay=200;
 
 void setup() {
   // put your setup code here, to run once:
@@ -20,9 +20,9 @@ void loop() {
   // put your main code here, to run repeatedly:
   //Give low pulse before giving high pulse
   digitalWrite(trig_pins,LOW);
-  delayMicroseconds(1);
+  delay(Ultrasonic_delay);
   digitalWrite(trig_pins,HIGH);
-  delayMicroseconds(1);
+  delay(Ultrasonic_delay);
   digitalWrite(trig_pins,LOW);//Reset to emitting 
 
   //Measure the length of the return pulse
@@ -44,6 +44,12 @@ void LED_function(int dist){
   }else{
     digitalWrite(LEDpin,LOW);
   }
+}
+
+//Change LED brightness based on distance of an object
+void LED_brightness(int dist){
+  int brightness= (300)/distance;
+  analogWrite (LEDpin,brightness);
 }
 
 
