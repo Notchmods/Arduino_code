@@ -1,0 +1,16 @@
+void setup() {
+  Serial.begin(9600);
+  // put your setup code here, to run once:
+  pinMode(A0,INPUT); //Potentiometer pin
+  pinMode(9, OUTPUT); // LED light
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  int potentio_value=analogRead(A0);// Potentiometer values
+  int brightness= (255.0/1023.0)*potentio_value; //Set brightness
+  Serial.println(potentio_value);
+  analogWrite(9,brightness); //Adjust lighting via analog methods
+  //delay(1);
+}
